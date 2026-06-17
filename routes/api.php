@@ -9,9 +9,17 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::apiResource('products', ProductController::class)->parameters([
+// Route::middleware('auth:sanctum')->group(function(){
+
+// });
+
+Route::middleware('auth:sanctum')->group(function(){
+    Route::apiResource('products', ProductController::class)->parameters([
     'products' => 'id'
-]);
+    ]);
+});
+
+
 
 Route::post('auth/register', [AuthController::class, 'register']);
 Route::post('auth/login', [AuthController::class, 'login']);
